@@ -44,24 +44,8 @@ source "qemu" "ubuntu" {
     ["-d", "cpu_reset"],
     ["-d", "guest_errors"],
     ["-d", "int"],
-    ["-d", "in_asm"],
-    ["-d", "out_asm"],
     ["-d", "exec"],
-    ["-d", "op"],
-    ["-d", "trace:all"],
-    ["-d", "unimp"],
-    ["-d", "page"],
-    ["-d", "mmu"],
-    ["-d", "pcall"],
-    ["-d", "cpu"],
-    ["-d", "io"],
-    ["-d", "tb"],
-    ["-d", "vnc"],
-    ["-d", "net"],
-    ["-d", "migration"],
-    ["-d", "block"],
-    ["-d", "trace:all"],
-    ["-d", "all"]
+    ["-d", "trace:all"]
   ]
 }
 

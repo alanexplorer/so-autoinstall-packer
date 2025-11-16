@@ -1,0 +1,9 @@
+# artefatos locais
+iso/
+output/
+
+# arquivos temporários do packer
+*.log
+*.qcow2
+.pkr.hcl.lock.hcl
+

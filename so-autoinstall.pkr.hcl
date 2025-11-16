@@ -21,32 +21,23 @@ source "qemu" "ubuntu" {
   memory = 2048
   cpus   = 2
 
-  ssh_username           = "dev"
-  ssh_password           = "dev"
-  ssh_timeout            = "30m"
-  ssh_handshake_attempts = 20
-
   communicator = "ssh"
+  ssh_username = "dev"
+  ssh_password = "dev"
+  ssh_timeout  = "30m"
 
   http_directory = "autoinstall"
 
   boot_wait = "5s"
   boot_command = [
-    "<esc><wait>",
-    "<esc><wait>",
+    "c<wait>",
     "linux /casper/vmlinuz --- autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
-    "quiet ",
-    "initrd /casper/initrd",
-    "<enter>"
+    "console=tty1 console=ttyS0<enter><wait>",
+    "initrd /casper/initrd<enter><wait>",
+    "boot<enter>"
   ]
 
-  qemuargs = [
-    ["-d", "cpu_reset"],
-    ["-d", "guest_errors"],
-    ["-d", "int"],
-    ["-d", "exec"],
-    ["-d", "trace:all"]
-  ]
+  # se quiser, deixe sem logs extras de qemu por enquanto
 }
 
 build {

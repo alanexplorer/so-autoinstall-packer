@@ -23,11 +23,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y qemu-system-x86 qemu-utils
 
-      - name: Download Ubuntu ISO
+      - name: Download Ubuntu ISO (24.04 live-server)
         run: |
           mkdir -p iso
           curl -L -o iso/ubuntu-24.04-live-server.iso \
             https://releases.ubuntu.com/24.04/ubuntu-24.04-live-server-amd64.iso
+
+          # sanity check: ISO tem que ter pelo menos 1GB
+          SIZE=$(stat -c%s iso/ubuntu-24.04-live-server.iso)
+          if [ "$SIZE" -lt 1000000000 ]; then
+            echo "ISO muito pequena ($SIZE bytes), download falhou."
+            exit 1
+          fi
 
       - name: Packer init
         run: packer init so-autoinstall.pkr.hcl

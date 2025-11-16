@@ -1,0 +1,40 @@
+name: Build SO Image
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Packer
+        uses: hashicorp/setup-packer@v3.1.0
+        with:
+          version: latest
+
+      - name: Download Ubuntu ISO
+        run: |
+          mkdir -p iso
+          curl -L -o iso/ubuntu-24.04-live-server.iso \
+            https://releases.ubuntu.com/24.04/ubuntu-24.04-live-server-amd64.iso
+
+      - name: Packer init
+        run: packer init so-autoinstall.pkr.hcl
+
+      - name: Packer validate
+        run: packer validate so-autoinstall.pkr.hcl
+
+      - name: Packer build
+        run: packer build -color=false so-autoinstall.pkr.hcl
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: so-ubuntu-image
+          path: output/

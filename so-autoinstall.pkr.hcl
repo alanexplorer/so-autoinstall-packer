@@ -15,7 +15,7 @@ source "qemu" "ubuntu" {
   format           = "qcow2"
   disk_size        = "20G"
   headless         = true
-  accelerator      = "kvm"
+  accelerator      = "none"
 
   ssh_username     = "dev"
   ssh_password     = "dev"

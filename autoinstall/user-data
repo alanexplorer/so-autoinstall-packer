@@ -1,0 +1,22 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: pt_BR.UTF-8
+  keyboard:
+    layout: br
+  identity:
+    hostname: ubuntu-ci
+    username: dev
+    # senha = dev
+    password: "$6$fqQsh6UMxcuKASy4$MK1.IIQrjaH8v8hN7ijMie6GEXDvqNxtUQ6tXSNn/aVDJFAv.WMm9MT3ENRzy5JHj6QzmBwudUQOiXzv6JbwX1"
+  ssh:
+    install-server: true
+    allow-pw: true
+  storage:
+    layout:
+      name: lvm
+  packages:
+    - openssh-server
+    - qemu-guest-agent
+  late-commands:
+    - curtin in-target --target=/target -- bash -c 'echo "built-by-packer" > /etc/image-origin'
